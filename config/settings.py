@@ -31,10 +31,14 @@ DEBUG = env.bool("DEBUG", False)
 
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", "").split(",")
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'account',
+    "core.integrator"
 ]
 
 AUTH_USER_MODEL = 'account.User'
@@ -50,6 +55,7 @@ AUTH_USER_MODEL = 'account.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -128,7 +134,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "static/"
+# STATIC_ROOT = BASE_DIR / "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
